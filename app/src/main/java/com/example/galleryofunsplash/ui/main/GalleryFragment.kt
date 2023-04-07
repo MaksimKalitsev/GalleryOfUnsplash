@@ -7,8 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.galleryofunsplash.R
+import com.example.galleryofunsplash.databinding.FragmentGalleryBinding
 
 class GalleryFragment : Fragment() {
+
+    private var _binding: FragmentGalleryBinding? = null
+    private val binding get() = _binding!!
+
+    private val adapter = GalleryAdapter()
 
     companion object {
         fun newInstance() = GalleryFragment()
@@ -23,10 +29,12 @@ class GalleryFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_gallery, container, false)
+        _binding = FragmentGalleryBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
 }

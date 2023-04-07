@@ -2,7 +2,7 @@ package com.example.galleryofunsplash
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.galleryofunsplash.ui.main.MainFragment
+import com.example.galleryofunsplash.ui.main.GalleryFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance())
+                .replace(R.id.container, GalleryFragment.newInstance())
                 .commitNow()
         }
     }

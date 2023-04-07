@@ -15,10 +15,10 @@ data class Photo(
 ) : Parcelable{
     @Parcelize
     data class Urls(
-        @SerializedName("fullsize")
-        val full: String,
-        @SerializedName("thumbsize")
-        val thumb: String
+        @SerializedName("full")
+        val full_size: String,
+        @SerializedName("thumb")
+        val thumb_size: String
     ) : Parcelable
 }
 

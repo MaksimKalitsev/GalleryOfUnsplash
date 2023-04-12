@@ -26,7 +26,9 @@ data class Photo(
         GalleryData(
             id = id,
             photo = urls.thumb_size,
-            description = description
+            description = description,
+            width = width,
+            height = height
         )
 
 }

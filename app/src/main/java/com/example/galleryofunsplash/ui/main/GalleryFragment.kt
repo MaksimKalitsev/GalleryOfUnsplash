@@ -49,7 +49,7 @@ class GalleryFragment : Fragment() {
         _binding = FragmentGalleryBinding.bind(view)
 
         adapter = GalleryAdapter()
-        val layoutManager = GridLayoutManager(requireContext(), 4)
+        val layoutManager = GridLayoutManager(requireContext(), 2)
         binding.rvGallery.layoutManager = layoutManager
         binding.rvGallery.adapter = adapter
 

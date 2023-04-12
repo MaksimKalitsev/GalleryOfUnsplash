@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.galleryofunsplash.databinding.FragmentGalleryBinding
 
 
@@ -49,7 +50,7 @@ class GalleryFragment : Fragment() {
         _binding = FragmentGalleryBinding.bind(view)
 
         adapter = GalleryAdapter()
-        val layoutManager = GridLayoutManager(requireContext(), 2)
+        val layoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)//GridLayoutManager(requireContext(), 2)
         binding.rvGallery.layoutManager = layoutManager
         binding.rvGallery.adapter = adapter
 

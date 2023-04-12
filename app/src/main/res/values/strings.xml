@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GalleryOfUnsplash</string>
+    <string name="change_count">Change count</string>
 </resources>

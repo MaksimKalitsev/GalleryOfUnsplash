@@ -31,7 +31,6 @@ class GalleryAdapter : RecyclerView.Adapter<GalleryAdapter.GalleryHolder>() {
 
         val mConstraintLayout: ConstraintLayout = item.findViewById(R.id.constraint)
         val mPhoto: ImageView = item.findViewById(R.id.iv_photo)
-        val mDescription: TextView = item.findViewById(R.id.tv_description)
 
         fun bind(data: GalleryData) = with(binding) {
             ivPhoto.load(data.photo)
@@ -50,6 +49,7 @@ class GalleryAdapter : RecyclerView.Adapter<GalleryAdapter.GalleryHolder>() {
     }
 
     override fun onBindViewHolder(holder: GalleryHolder, position: Int) {
+//        holder.bind(items[position])
         val test = items[position]
         holder.bind(test)
 

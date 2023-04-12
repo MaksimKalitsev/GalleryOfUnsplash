@@ -1,16 +1,18 @@
 package com.example.galleryofunsplash.repository
 
-import com.example.galleryofunsplash.models.Photo
+
+import com.example.galleryofunsplash.di.AppModule
+import com.example.galleryofunsplash.ui.main.GalleryData
 
 interface IPhotoRepository {
-    suspend fun getPhoto(accessKey: String): Result<List<Photo>>
+    suspend fun getPhoto(): Result<List<GalleryData>>
 }
 
-class PhotoRepository(private val api: UnsplashApi) : IPhotoRepository {
-
-    override suspend fun getPhoto(accessKey: String): Result<List<Photo>> =
+class PhotoRepository(accessKey: String) : IPhotoRepository {
+    private val api = AppModule(accessKey).unsplashApi
+    override suspend fun getPhoto(): Result<List<GalleryData>> =
         try {
-            val photos = api.getPhotos(accessKey)
+            val photos = api.getPhotos().map { it.toGalleryData() }
             Result.success(photos)
         } catch (e: Exception) {
             Result.failure(e)

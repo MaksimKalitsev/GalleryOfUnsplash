@@ -8,6 +8,6 @@ import retrofit2.http.Query
 interface UnsplashApi {
     @GET("photos")
     suspend fun getPhotos(
-        @Header("Client-ID") accessKey: String,
+       // @Header("Authorization") clientID: String,
     ): List<Photo>
 }

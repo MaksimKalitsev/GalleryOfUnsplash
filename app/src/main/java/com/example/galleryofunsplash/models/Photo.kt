@@ -1,6 +1,7 @@
 package com.example.galleryofunsplash.models
 
 import android.os.Parcelable
+import com.example.galleryofunsplash.ui.main.GalleryData
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
@@ -12,7 +13,7 @@ data class Photo(
     @SerializedName("alt_description")
     val description: String,
     val urls: Urls
-) : Parcelable{
+) : Parcelable {
     @Parcelize
     data class Urls(
         @SerializedName("full")
@@ -20,6 +21,14 @@ data class Photo(
         @SerializedName("thumb")
         val thumb_size: String
     ) : Parcelable
+
+    fun toGalleryData(): GalleryData =
+        GalleryData(
+            id = id,
+            photo = urls.thumb_size,
+            description = description
+        )
+
 }
 
 

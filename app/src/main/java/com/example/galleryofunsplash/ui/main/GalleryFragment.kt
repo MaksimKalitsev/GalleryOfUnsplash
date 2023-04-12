@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.galleryofunsplash.databinding.FragmentGalleryBinding
 
 
@@ -20,7 +21,7 @@ class GalleryFragment : Fragment() {
     private var _binding: FragmentGalleryBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModels<GalleryViewModel>()
-    private val adapter = GalleryAdapter()
+    private lateinit var adapter: GalleryAdapter
 
     companion object {
         fun newInstance() = GalleryFragment()
@@ -44,18 +45,26 @@ class GalleryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.photosLiveData.observe(viewLifecycleOwner, progressObserver)
+
         _binding = FragmentGalleryBinding.bind(view)
 
+        adapter = GalleryAdapter()
+        val layoutManager = GridLayoutManager(requireContext(), 4)
+        binding.rvGallery.layoutManager = layoutManager
+        binding.rvGallery.adapter = adapter
+
+        viewModel.photosLiveData.observe(viewLifecycleOwner, stateObserver)
         viewModel.getPhotos()
+
     }
 
-    private val progressObserver = Observer<GalleryViewModel.State> {
-        binding.progressBar.isVisible = it.requestState == RequestState.LOADING
-        when (it.requestState) {
+    private val stateObserver = Observer<GalleryViewModel.State> { state ->
+        binding.progressBar.isVisible = state.requestState == RequestState.LOADING
+        when (state.requestState) {
             RequestState.SUCCESS -> {
-                binding.progressBar.visibility = View.GONE
-                //todo
+                state.photos
+                adapter.items = state.photos
+
             }
             RequestState.ERROR -> {
                 //todo

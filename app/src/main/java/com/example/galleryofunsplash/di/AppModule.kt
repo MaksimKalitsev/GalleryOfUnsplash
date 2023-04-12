@@ -12,13 +12,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 import okhttp3.logging.HttpLoggingInterceptor
 
 
-class AppModule(private val accessKey: String) {
+class AppModule(accessKey: String) {
     private val gson: Gson = GsonBuilder().create()
     private val authInterceptor = AuthInterceptor(accessKey)
     private val okHttpClient = createOkHttpClient()
     private val retrofit = createRetrofit(gson, okHttpClient)
 
-    val unsplashApi = retrofit.create(UnsplashApi::class.java)
+    val unsplashApi: UnsplashApi = retrofit.create(UnsplashApi::class.java)
 
     private fun createRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
@@ -30,8 +30,8 @@ class AppModule(private val accessKey: String) {
 
     private fun createOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(createLoggingInterceptor())
             .addInterceptor(authInterceptor)
+            .addInterceptor(createLoggingInterceptor())
             .build()
     }
 
@@ -44,7 +44,7 @@ class AppModule(private val accessKey: String) {
         override fun intercept(chain: Interceptor.Chain): Response {
             val request = chain.request()
             val newRequest = request.newBuilder()
-                .addHeader( "Client-ID", accessKey)
+                .addHeader( "Authorization", accessKey)
                 .build()
             return chain.proceed(newRequest)
         }

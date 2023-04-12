@@ -5,12 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.example.galleryofunsplash.R
 import com.example.galleryofunsplash.databinding.ItemPhotoBinding
 
 class GalleryAdapter : RecyclerView.Adapter<GalleryAdapter.GalleryHolder>() {
 
-  private var items: List<GalleryData> = emptyList()
+   var items: List<GalleryData> = emptyList()
       set(newValue) {
           val diffCallback = DiffCallback(field, newValue)
           val diffResult = DiffUtil.calculateDiff(diffCallback)
@@ -21,6 +22,7 @@ class GalleryAdapter : RecyclerView.Adapter<GalleryAdapter.GalleryHolder>() {
     class GalleryHolder(item: View) : RecyclerView.ViewHolder(item) {
         private val binding = ItemPhotoBinding.bind(item)
         fun bind(data: GalleryData) = with(binding) {
+            ivPhoto.load(data.photo)
           //  ivPhoto.setImageResource(data.photo)
             tvDescription.text = data.description
         }

@@ -2,6 +2,7 @@ package com.example.galleryofunsplash.ui.main
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.os.bundleOf
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -9,10 +10,10 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.galleryofunsplash.R
 import com.example.galleryofunsplash.databinding.FragmentGalleryBinding
-import java.util.*
 
 
 enum class RequestState {
@@ -28,8 +29,13 @@ class GalleryFragment : Fragment() {
 
     private var columnCount = 2
 
-    companion object {
-        fun newInstance() = GalleryFragment()
+    private val callback = object : GalleryAdapter.GalleryHolder.Callback {
+        override fun onPictureClicked(item: GalleryData) {
+
+            val direction =
+                GalleryFragmentDirections.actionGalleryFragmentToDetailsGalleryFragment(galleryData = item)
+            findNavController().navigate(direction)
+        }
     }
 
 
@@ -51,9 +57,7 @@ class GalleryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        _binding = FragmentGalleryBinding.bind(view)
-
-        adapter = GalleryAdapter()
+        adapter = GalleryAdapter(callback)
         val layoutManager = StaggeredGridLayoutManager(
             2,
             StaggeredGridLayoutManager.VERTICAL
@@ -65,6 +69,8 @@ class GalleryFragment : Fragment() {
         viewModel.getPhotos()
 
         setupToolbarMenu()
+
+
     }
 
     private fun setupToolbarMenu() {
@@ -99,9 +105,8 @@ class GalleryFragment : Fragment() {
         binding.progressBar.isVisible = state.requestState == RequestState.LOADING
         when (state.requestState) {
             RequestState.SUCCESS -> {
-                state.photos
                 adapter.items = state.photos
-
+//                adapter.updateItems(state.photos)
             }
             RequestState.ERROR -> {
                 //todo

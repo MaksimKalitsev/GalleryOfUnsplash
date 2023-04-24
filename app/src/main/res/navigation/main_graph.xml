@@ -18,5 +18,9 @@
         android:id="@+id/detailsGalleryFragment"
         android:name="com.example.galleryofunsplash.ui.main.DetailsGalleryFragment"
         android:label="fragment_details_gallery"
-        tools:layout="@layout/fragment_details_gallery" />
+        tools:layout="@layout/fragment_details_gallery" >
+        <argument
+            android:name="galleryData"
+            app:argType="com.example.galleryofunsplash.ui.main.GalleryData" />
+    </fragment>
 </navigation>
